@@ -8,6 +8,8 @@ class Stack{
         Stack();
         Stack(const Stack &parent);
         ~Stack();
+        Stack& operator=(const Stack &parent);
+        void pointerNotNull(void *p);
         void push(int value);
         int pop();
         bool isEmpty();
