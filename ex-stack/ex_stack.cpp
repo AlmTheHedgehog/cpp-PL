@@ -25,6 +25,7 @@ Stack& Stack::operator=(const Stack &parent){
     if(this != &parent){
         height = parent.height;
         arr_size = parent.arr_size;
+        free(arr);
         arr = (int*)malloc(sizeof(int) * arr_size);
         pointerNotNull(arr);
         memcpy(arr, parent.arr, sizeof(int) * arr_size);
