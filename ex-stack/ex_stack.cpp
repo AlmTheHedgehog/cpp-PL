@@ -23,12 +23,18 @@ Stack::~Stack(){
 
 Stack& Stack::operator=(const Stack &parent){
     if(this != &parent){
-        height = parent.height;
-        arr_size = parent.arr_size;
-        free(arr);
-        arr = (int*)malloc(sizeof(int) * arr_size);
-        pointerNotNull(arr);
-        memcpy(arr, parent.arr, sizeof(int) * arr_size);
+        if(arr_size < parent.height){
+            arr_size = parent.height + 1;
+            arr = (int*)realloc(arr, sizeof(int) * arr_size);
+            pointerNotNull(arr);
+            memcpy(arr, parent.arr, sizeof(int) * arr_size);
+            height = parent.height;
+        }else{
+            if(parent.height >= 0){
+                memcpy(arr, parent.arr, sizeof(int) * parent.height + 1);
+                height = parent.height;
+            }
+        }
     }
     return *this;    
 }
