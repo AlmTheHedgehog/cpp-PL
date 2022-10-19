@@ -2,7 +2,7 @@
 headers = ComplexNumber.h
 
 # List your *.cpp files:
-sources = test.cpp ComplexNumber.cpp
+sources = cn_test.cpp ComplexNumber.cpp
 
 # Specify name of your program:
 executable = complexNumberTest
