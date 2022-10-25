@@ -3,10 +3,15 @@
 
 using namespace std;
 
+void passingByValue(Stack stack);
+void passingByRef(Stack& stack);
+
 int main(){
     Stack my_stack1;
     Stack my_stack3;
 	Stack my_stack4;
+	
+	my_stack4.push(4);
 
 	my_stack4 = my_stack3;
 	cout << "stack4 isEmpty - " << my_stack4.isEmpty() << endl;
@@ -39,6 +44,19 @@ int main(){
 
 	my_stack3 = my_stack2;
 	cout << "stack3(bigger) pop - " << my_stack3.pop() << endl;
+	
+	passingByValue(my_stack2);
+	passingByRef(my_stack2);
 
+	cout << "end." << endl;
+	
 	return 0;
+}
+
+void passingByValue(Stack stack){
+		stack.push(25);
+}
+
+void passingByRef(Stack& stack){
+		stack.push(25);
 }
