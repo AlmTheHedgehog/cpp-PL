@@ -6,6 +6,7 @@ class ComplexNumber{
         ComplexNumber();
         ComplexNumber(double realV);
         ComplexNumber(double realV, double imgV);
+        ComplexNumber(const ComplexNumber& old);
         friend std::ostream& operator<< (std::ostream& stream, const ComplexNumber& dispNumber);
         
         ComplexNumber operator+(const ComplexNumber& secondNumber) const;
@@ -13,6 +14,17 @@ class ComplexNumber{
         ComplexNumber operator-() const;
         ComplexNumber operator*(const ComplexNumber& secondNumber) const;
         ComplexNumber operator/(const ComplexNumber& secondNumber) const;
+
+        ComplexNumber& operator+=(const ComplexNumber& secondNumber);
+        ComplexNumber& operator-=(const ComplexNumber& secondNumber);
+        ComplexNumber& operator/=(const ComplexNumber& secondNumber);
+        ComplexNumber& operator*=(const ComplexNumber& secondNumber);
+
+        bool operator==(const ComplexNumber& secondNumber) const;
+        bool operator!=(const ComplexNumber& secondNumber) const;
+
+        double getAmplitude();
+        double getPhase();
         
         double getRealPart();
         double getImgPart();
@@ -23,10 +35,3 @@ class ComplexNumber{
         double realPart;
         double imgPart;
 };
-
-/*
-TODO
-arithmetic operators: += -= *= /=
-comparison operators: == !=
-functions returning amplitude and phase (you can use in your implementation functions from the C++ standard library)
-*/
