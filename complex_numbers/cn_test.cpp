@@ -11,7 +11,8 @@ void substrAssignOperatorTest(ComplexNumber cn1, ComplexNumber& cn2); // operato
 void divAssignOperatorTest(ComplexNumber cn1, ComplexNumber& cn2); // operator/=          
 void multAssignOperatorTest(ComplexNumber cn1, ComplexNumber& cn2); // operator*=         
 void equalTest(ComplexNumber& cn1, ComplexNumber& cn2); // operator==                     
-void notEqualTest(ComplexNumber& cn1, ComplexNumber& cn2); // operator!=                  
+void notEqualTest(ComplexNumber& cn1, ComplexNumber& cn2); // operator!=
+void getAmpPhaseTest(ComplexNumber& cn1); // phase and amp                
 
 int main(){
 
@@ -28,6 +29,7 @@ int main(){
     multAssignOperatorTest(cn1, cn2);
     equalTest(cn1, cn2);
     notEqualTest(cn1, cn2);
+    getAmpPhaseTest(cn1);
 
     return 0;
 }
@@ -38,6 +40,8 @@ void outOperatorTest(ComplexNumber& cn1){
 
 void addOperatorTest(ComplexNumber& cn1, ComplexNumber& cn2){
     std::cout << "operator+ test cn1+cn2:" << cn1+cn2 << std::endl;
+    std::cout << "operator+ test cn1+5:" << cn1+5 << std::endl;
+    std::cout << "operator+ test 5+cn1:" << 5+cn1 << std::endl;
 }
 
 void substrOperatorTest(ComplexNumber& cn1, ComplexNumber& cn2){
@@ -54,11 +58,14 @@ void divOperatorTest(ComplexNumber& cn1, ComplexNumber& cn2){
 
 void multOperatorTest(ComplexNumber& cn1, ComplexNumber& cn2){
     std::cout << "operator* test cn1*cn2:" << cn1*cn2 << std::endl;
+    std::cout << "operator* test cn1*5:" << cn1*5 << std::endl;
+    std::cout << "operator* test 5*cn2:" << 5*cn1 << std::endl;
 }
 
 void addAssignOperatorTest(ComplexNumber cn1, ComplexNumber& cn2){
     cn1 += cn2;
     std::cout << "operator+= test cn1+=cn2:" << cn1 << std::endl;
+    std::cout << "operator+= test cn1+=cn2+=c1:" << (cn1 += cn2 += cn1) << std::endl;
 }
 
 void substrAssignOperatorTest(ComplexNumber cn1, ComplexNumber& cn2){
@@ -74,6 +81,7 @@ void divAssignOperatorTest(ComplexNumber cn1, ComplexNumber& cn2){
 void multAssignOperatorTest(ComplexNumber cn1, ComplexNumber& cn2){
     cn1 *= cn2;
     std::cout << "operator*= test cn1*=cn2:" << cn1 << std::endl;
+    std::cout << "operator*= test (cn1 =* cn2) =* cn1:" << ((cn1 *= cn2) *= cn1) << std::endl;
 }
 
 void equalTest(ComplexNumber& cn1, ComplexNumber& cn2){
@@ -81,10 +89,17 @@ void equalTest(ComplexNumber& cn1, ComplexNumber& cn2){
     std::cout << std::endl;
     std::cout << "operator== test cn1==cn2:" << (cn1==cn2) << "(false - correct)" << std::endl;
     std::cout << "operator== test cn1==3+2i:" << (cn1==cnNew) << "(true - correct)" << std::endl;
+    std::cout << "operator== test cn1==3.5:" << (cn1==3.5) << "(false - correct)" << std::endl;
+    std::cout << "operator== test 3.5==cn1:" << (3.5==cn1) << "(false - correct)" << std::endl;
 }
 
 void notEqualTest(ComplexNumber& cn1, ComplexNumber& cn2){
     ComplexNumber cnNew(cn1);
     std::cout << "operator!= test cn1!=cn2:" << (cn1!=cn2) << "(true - correct)" << std::endl;
     std::cout << "operator!= test cn1!=3+2i:" << (cn1!=cnNew) << "(false - correct)" << std::endl;
+}
+
+void getAmpPhaseTest(ComplexNumber& cn1){
+	std::cout << "Amp:" << cn1.getAmplitude() << std::endl;
+	std::cout << "Phase:" << cn1.getPhase() << std::endl;
 }

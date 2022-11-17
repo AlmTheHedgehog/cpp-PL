@@ -28,27 +28,27 @@ std::ostream& operator<< (std::ostream& stream, const ComplexNumber& dispNumber)
     return stream << dispNumber.realPart << sign << fabs(dispNumber.imgPart) << "i";
 }
 
-ComplexNumber ComplexNumber::operator+(const ComplexNumber& secondNumber) const{    //TODO operator+ test
-    return ComplexNumber(realPart+secondNumber.realPart, imgPart+secondNumber.imgPart);
+ComplexNumber operator+(const ComplexNumber& firstNumber, const ComplexNumber& secondNumber){    //TODO operator+ test
+    return ComplexNumber(firstNumber.realPart+secondNumber.realPart, firstNumber.imgPart+secondNumber.imgPart);
 }
 
-ComplexNumber ComplexNumber::operator-(const ComplexNumber& secondNumber) const{    //TODO operator- test
-    return ComplexNumber(realPart-secondNumber.realPart, imgPart-secondNumber.imgPart);
+ComplexNumber operator-(const ComplexNumber& firstNumber, const ComplexNumber& secondNumber){    //TODO operator- test
+    return ComplexNumber(firstNumber.realPart-secondNumber.realPart, firstNumber.imgPart-secondNumber.imgPart);
 }
 
 ComplexNumber ComplexNumber::operator-() const{     //TODO operator- test (eg -a)
     return ComplexNumber(-realPart, -imgPart);
 };
 
-ComplexNumber ComplexNumber::operator*(const ComplexNumber& secondNumber) const{    //TODO operator* test
-    return ComplexNumber((realPart * secondNumber.realPart) - (imgPart * secondNumber.imgPart),
-                        (realPart * secondNumber.imgPart) + (imgPart * secondNumber.realPart));
+ComplexNumber operator*(const ComplexNumber& firstNumber, const ComplexNumber& secondNumber){    //TODO operator* test
+    return ComplexNumber((firstNumber.realPart * secondNumber.realPart) - (firstNumber.imgPart * secondNumber.imgPart),
+                        (firstNumber.realPart * secondNumber.imgPart) + (firstNumber.imgPart * secondNumber.realPart));
 }
 
-ComplexNumber ComplexNumber::operator/(const ComplexNumber& secondNumber) const{    //TODO operator/ test
+ComplexNumber operator/(const ComplexNumber& firstNumber, const ComplexNumber& secondNumber){    //TODO operator/ test
     double dev = secondNumber.realPart * secondNumber.realPart + secondNumber.imgPart * secondNumber.imgPart;
-    return ComplexNumber(((realPart * secondNumber.realPart)+(imgPart * secondNumber.imgPart))/dev,
-                        ((imgPart * secondNumber.realPart)-(realPart * secondNumber.imgPart))/dev);
+    return ComplexNumber(((firstNumber.realPart * secondNumber.realPart)+(firstNumber.imgPart * secondNumber.imgPart))/dev,
+                        ((firstNumber.imgPart * secondNumber.realPart)-(firstNumber.realPart * secondNumber.imgPart))/dev);
 }
 
 ComplexNumber& ComplexNumber::operator+=(const ComplexNumber& secondNumber){    //TODO operator+= test
@@ -76,12 +76,12 @@ ComplexNumber& ComplexNumber::operator*=(const ComplexNumber& secondNumber){    
     return *this;
 }
 
-bool ComplexNumber::operator==(const ComplexNumber& secondNumber) const{    //TODO operator== test
-    return (((realPart - secondNumber.realPart) < 0.000001) && ((imgPart - secondNumber.imgPart) < 0.000001));
+bool operator==(const ComplexNumber& firstNumber, const ComplexNumber& secondNumber){    //TODO operator== test
+    return ((firstNumber.realPart == secondNumber.realPart) && (firstNumber.imgPart == secondNumber.imgPart));
 }
 
-bool ComplexNumber::operator!=(const ComplexNumber& secondNumber) const{    //TODO operator!= test
-    return !(((realPart - secondNumber.realPart) < 0.000001) && ((imgPart - secondNumber.imgPart) < 0.000001));
+bool operator!=(const ComplexNumber& firstNumber, const ComplexNumber& secondNumber){    //TODO operator!= test
+    return !((firstNumber.realPart == secondNumber.realPart) && (firstNumber.imgPart == secondNumber.imgPart));
 }
 
 
@@ -90,7 +90,7 @@ double ComplexNumber::getAmplitude(){   //TODO getAmplitude test
 }
 
 double ComplexNumber::getPhase(){   //TODO getPhase test
-    return atan(imgPart/realPart);
+    return atan2(imgPart, realPart);
 }
 
 

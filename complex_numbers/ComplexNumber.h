@@ -9,19 +9,19 @@ class ComplexNumber{
         ComplexNumber(const ComplexNumber& old);
         friend std::ostream& operator<< (std::ostream& stream, const ComplexNumber& dispNumber);
         
-        ComplexNumber operator+(const ComplexNumber& secondNumber) const;
-        ComplexNumber operator-(const ComplexNumber& secondNumber) const;
+        friend ComplexNumber operator+(const ComplexNumber& firstNumber, const ComplexNumber& secondNumber);
+        friend ComplexNumber operator-(const ComplexNumber& firstNumber, const ComplexNumber& secondNumber);
         ComplexNumber operator-() const;
-        ComplexNumber operator*(const ComplexNumber& secondNumber) const;
-        ComplexNumber operator/(const ComplexNumber& secondNumber) const;
+        friend ComplexNumber operator*(const ComplexNumber& firstNumber, const ComplexNumber& secondNumber);
+        friend ComplexNumber operator/(const ComplexNumber& firstNumber, const ComplexNumber& secondNumber);
 
         ComplexNumber& operator+=(const ComplexNumber& secondNumber);
         ComplexNumber& operator-=(const ComplexNumber& secondNumber);
         ComplexNumber& operator/=(const ComplexNumber& secondNumber);
         ComplexNumber& operator*=(const ComplexNumber& secondNumber);
-
-        bool operator==(const ComplexNumber& secondNumber) const;
-        bool operator!=(const ComplexNumber& secondNumber) const;
+        
+        friend bool operator==(const ComplexNumber& firstNumber, const ComplexNumber& secondNumber);
+        friend bool operator!=(const ComplexNumber& firstNumber, const ComplexNumber& secondNumber);
 
         double getAmplitude();
         double getPhase();
