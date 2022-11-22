@@ -46,8 +46,10 @@ double& Poly::insertNewCoeff(const int& newCoeff, const int lastElementIndex){
 
 std::ostream& operator<< (std::ostream& stream, const Poly& dispPoly){
     const int INDEX_OF_LAST_ELEMENT = dispPoly.coefficients.size() - 1;
+    bool notZero = false;
     for(int i=INDEX_OF_LAST_ELEMENT; i>=0; i--){
         if(dispPoly.values[i] != 0){
+            notZero = true;
             if((dispPoly.values[i] > 0) && (i != INDEX_OF_LAST_ELEMENT)){
                 stream << "+";
             }
@@ -58,15 +60,30 @@ std::ostream& operator<< (std::ostream& stream, const Poly& dispPoly){
             }
         }
     }
+    if(!notZero){
+        stream << "0";
+    }
     return stream;
 }
 
+Poly operator+(Poly firstPoly, const Poly& secondPoly){
+    for(int i = 0; i<(int)secondPoly.values.size(); i++){
+        firstPoly[secondPoly.coefficients[i]] += secondPoly.values[i];
+    }
+    return firstPoly;
+}
 
+Poly operator-(Poly firstPoly, const Poly& secondPoly){
+    for(int i = 0; i<(int)secondPoly.values.size(); i++){
+        firstPoly[secondPoly.coefficients[i]] -= secondPoly.values[i];
+    }
+    return firstPoly;
+}
 
-
-
-
-
-
-
-//in printing if values[i] == 0 - not print!
+Poly Poly::operator-() const{
+    Poly newPoly = *this;
+    for(int i=0; i<(int)newPoly.values.size(); i++){
+        newPoly.values[i] = -newPoly.values[i];
+    }
+    return newPoly;
+}

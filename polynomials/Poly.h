@@ -9,8 +9,12 @@ class Poly{
         Poly(const Poly& parent);
         ~Poly();
 
-        friend std::ostream& operator<< (std::ostream& stream, const Poly& dispPoly);
-        double& operator[] (const int& curCoeff);
+        friend std::ostream& operator<<(std::ostream& stream, const Poly& dispPoly);
+        double& operator[](const int& curCoeff);
+
+        friend Poly operator+(Poly firstPoly, const Poly& secondPoly);
+        friend Poly operator-(Poly firstPoly, const Poly& secondPoly);
+        Poly operator-() const;
 
 
 
