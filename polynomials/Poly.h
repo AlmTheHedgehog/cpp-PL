@@ -15,6 +15,7 @@ class Poly{
         friend Poly operator+(Poly firstPoly, const Poly& secondPoly);
         friend Poly operator-(Poly firstPoly, const Poly& secondPoly);
         Poly operator-() const;
+        friend Poly operator*(const Poly& firstPoly, const Poly& secondPoly);
 
 
 

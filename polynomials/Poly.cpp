@@ -87,3 +87,23 @@ Poly Poly::operator-() const{
     }
     return newPoly;
 }
+
+Poly operator*(const Poly& firstPoly, const Poly& secondPoly){
+    Poly newPoly;
+    double newValue;
+    int newCoeff;
+    for(int i = 0; i<(int)firstPoly.coefficients.size(); i++){
+        for(int j = 0; j<(int)secondPoly.coefficients.size(); j++){
+            if((firstPoly.values[i] != 0) && (secondPoly.values[j] != 0)){
+                newValue = firstPoly.values[i] * secondPoly.values[j];
+                newCoeff = firstPoly.coefficients[i] + secondPoly.coefficients[j];
+                if(newPoly[newCoeff] == 0){
+                    newPoly[newCoeff] = newValue;
+                }else{
+                    newPoly[newCoeff] += newValue;
+                }
+            }
+        }  
+    }
+    return newPoly;
+}
