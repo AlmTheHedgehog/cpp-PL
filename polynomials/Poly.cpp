@@ -107,3 +107,19 @@ Poly operator*(const Poly& firstPoly, const Poly& secondPoly){
     }
     return newPoly;
 }
+
+double Poly::operator()(double xValue) const{
+    double result = 0;
+    for(int i = 0; i < (int)values.size(); i++){
+        result += values[i] * toPower(xValue, coefficients[i]);
+    }
+    return result;
+}
+
+double Poly::toPower(double value, int power) const{
+    double result = 1;
+    for(int i = 0; i < power; i++){
+        result *= value;
+    }
+    return result;
+}
