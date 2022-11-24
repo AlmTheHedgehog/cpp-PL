@@ -1,9 +1,4 @@
 #include "Poly.h"
-#include <iostream>
-#include <algorithm>
-
-Poly::Poly():Poly(0){
-}
 
 Poly::Poly(const Poly& parent){
     values = parent.values;
@@ -15,10 +10,7 @@ Poly::Poly(double value){
     values.push_back(value);
 }
 
-Poly::~Poly(){
-}
-
-double& Poly::operator[] (const int& curCoeff){
+double& Poly::operator[] (int curCoeff){
     const int lastElementIndex = coefficients.size() - 1;
     for(int i=0; i<= lastElementIndex; i++){
         if(coefficients[i] == curCoeff){
@@ -28,7 +20,7 @@ double& Poly::operator[] (const int& curCoeff){
     return insertNewCoeff(curCoeff, lastElementIndex);    
 }
 
-double& Poly::insertNewCoeff(const int& newCoeff, const int lastElementIndex){
+double& Poly::insertNewCoeff(int newCoeff, const int lastElementIndex){
     int insertionIndex = 0;
     while((coefficients[insertionIndex] < newCoeff) && (insertionIndex < lastElementIndex)){
         insertionIndex++;

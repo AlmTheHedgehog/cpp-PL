@@ -1,16 +1,15 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 class Poly{
     public:
-        Poly();
-        Poly(double value);
+        Poly(double value = 0);
         Poly(const Poly& parent);
-        ~Poly();
-
+        
         friend std::ostream& operator<<(std::ostream& stream, const Poly& dispPoly);
-        double& operator[](const int& curCoeff);
+        double& operator[](int curCoeff);
         double operator()(double xValue) const;
 
         friend Poly operator+(Poly firstPoly, const Poly& secondPoly);
@@ -19,10 +18,9 @@ class Poly{
         friend Poly operator*(const Poly& firstPoly, const Poly& secondPoly);
 
 
-
     private:
         std::vector<double> values;
         std::vector<int> coefficients; //sorted from smaller to bigger
-        double& insertNewCoeff(const int& newCoeff, const int lastElementIndex);
+        double& insertNewCoeff(int newCoeff, const int lastElementIndex);
         double toPower(double value, int power) const;
 };
