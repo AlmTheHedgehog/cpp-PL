@@ -1,11 +1,28 @@
 #include "Matrix.h"
 #include "MatrixExeptions.h"
+//#define DEBUG_ENABLED
 
 Matrix::Matrix(int matrixHeight, int matrixWidth){
     matrixSharedData = new MatrixSharedPointer(matrixHeight, matrixWidth);
 }
 
+Matrix::Matrix(const Matrix& oldMtrx){
+    oldMtrx.matrixSharedData->numberOfAccessers++;
+    matrixSharedData = oldMtrx.matrixSharedData;
+}
+
+Matrix& Matrix::operator=(const Matrix& oldMtrx){
+    oldMtrx.matrixSharedData->numberOfAccessers++;
+    detachCurrentMatrixSharedPointer();
+    matrixSharedData = oldMtrx.matrixSharedData;
+    return *this;
+}
+
 Matrix::~Matrix(){
+    detachCurrentMatrixSharedPointer();
+}
+
+void Matrix::detachCurrentMatrixSharedPointer(){
     (matrixSharedData->numberOfAccessers)--;
     if((matrixSharedData->numberOfAccessers) == 0){
         delete matrixSharedData;
@@ -50,12 +67,16 @@ Matrix::Dref Matrix::operator()(int row, int column){
 
 
 Matrix::Dref::operator double() const{
-    std::cout << "read access"<< std::endl;
+    #ifdef DEBUG_ENABLED
+        std::cout << "read access"<< std::endl;
+    #endif
     return matrixRef.matrixSharedData->matrix_ptr[row][column];
 }
 
 Matrix::Dref& Matrix::Dref::operator=(double value){
-    std::cout << "write access"<< std::endl;
+    #ifdef DEBUG_ENABLED
+        std::cout << "write access"<< std::endl;
+    #endif
     matrixRef.matrixSharedData = matrixRef.matrixSharedData->detach();
     matrixRef.matrixSharedData->matrix_ptr[row][column] = value;
     return *this;

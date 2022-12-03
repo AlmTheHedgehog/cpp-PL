@@ -32,15 +32,20 @@ class Matrix{
 
         Matrix():Matrix(0, 0){};
         Matrix(int matrixHeight, int matrixWidth);
+        Matrix(const Matrix& oldMtrx);
+        Matrix& operator=(const Matrix& oldMtrx);
         ~Matrix();
         
         friend std::ostream& operator<<(std::ostream& stream, const Matrix& dispMatrix);
         double operator()(int row, int column) const;
         Dref operator()(int row, int column);
-        
+
+        int getHeight(){return matrixSharedData->height;};
+        int getWidth(){return matrixSharedData->width;};
 
     private:
         MatrixSharedPointer *matrixSharedData;
         static void pointerNotNull(void* ptr);
+        void detachCurrentMatrixSharedPointer();
 
 };
