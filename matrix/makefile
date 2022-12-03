@@ -1,5 +1,5 @@
 # List your *.h files (if you do not have them in your project then leave the variable "headers" empty):
-headers = Matrix.h
+headers = Matrix.h MatrixExeptions.h
 
 # List your *.cpp files:
 sources = Matrix.cpp MatrixTest.cpp
