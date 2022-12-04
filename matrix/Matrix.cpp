@@ -2,6 +2,7 @@
 #include "MatrixExeptions.h"
 //#define DEBUG_ENABLED
 
+//class Matrix
 Matrix::Matrix(int matrixHeight, int matrixWidth){
     matrixSharedData = new MatrixSharedPointer(matrixHeight, matrixWidth);
 }
@@ -46,26 +47,78 @@ std::ostream& operator<<(std::ostream& stream, const Matrix& dispMatrix){
 }
 
 double Matrix::operator()(int row, int column) const{
+    #ifdef DEBUG_ENABLED
+        std::cout << "Const accessor was called" << std::endl;
+    #endif
     if(!(((row >=1) && (row <= matrixSharedData->height)) &&
         ((column >=1) && (column <= matrixSharedData->width)))){
-        throw IndexOutOfBoundExeption();
+        throw IndexOutOfBoundException();
     }
-    return matrixSharedData->matrix_ptr[row][column];
+    return matrixSharedData->matrix_ptr[row-1][column-1];
 }
 
 Matrix::Dref Matrix::operator()(int row, int column){
     if(!(((row >=1) && (row <= matrixSharedData->height)) &&
         ((column >=1) && (column <= matrixSharedData->width)))){
-        throw IndexOutOfBoundExeption();
+        throw IndexOutOfBoundException();
     }
     return Dref(*this, row-1, column-1);
+}
+
+void Matrix::matrixIterationOperation(const Matrix& firstMatrix, const Matrix& secondMatrix, 
+                                    double (*operation)(double firstValue, double secondValue)){
+    for(int i = 1; i <= matrixSharedData->height; i++){
+        for(int j = 1; j <= matrixSharedData->width; j++){
+            operator()(i, j) = operation(firstMatrix(i, j), secondMatrix(i, j));
+        }
+    }
+}
+double Matrix::addElements(double firstValue, double secondValue){
+    return firstValue + secondValue;
+}
+double Matrix::subElements(double firstValue, double secondValue){
+    return firstValue - secondValue;
+}
+
+void Matrix::checkEqMatrixSize(const Matrix& secondMatrix) const{
+    if((matrixSharedData->height != secondMatrix.matrixSharedData->height) ||
+            (matrixSharedData->width != secondMatrix.matrixSharedData->width)){
+        throw InvalidMatrixSizeException();
+    }
+}
+
+Matrix Matrix::operator+(const Matrix& secondMatrix) const{
+    checkEqMatrixSize(secondMatrix);
+    Matrix newMatrix(matrixSharedData->height, matrixSharedData->width);
+    newMatrix.matrixIterationOperation(*this, secondMatrix, &addElements);
+    return newMatrix;
+    
+}
+
+Matrix Matrix::operator-(const Matrix& secondMatrix) const{
+    checkEqMatrixSize(secondMatrix);
+    Matrix newMatrix(matrixSharedData->height, matrixSharedData->width);
+    newMatrix.matrixIterationOperation(*this, secondMatrix, &subElements);
+    return newMatrix;
+}
+
+Matrix& Matrix::operator+=(const Matrix& secondMatrix){
+    checkEqMatrixSize(secondMatrix);
+    matrixIterationOperation(*this, secondMatrix, &addElements);
+    return *this;
+}
+
+Matrix& Matrix::operator-=(const Matrix& secondMatrix){
+    checkEqMatrixSize(secondMatrix);
+    matrixIterationOperation(*this, secondMatrix, &subElements);
+    return *this;
 }
 
 
 
 
 
-
+//class Dref
 Matrix::Dref::operator double() const{
     #ifdef DEBUG_ENABLED
         std::cout << "read access"<< std::endl;
@@ -90,10 +143,7 @@ Matrix::Dref& Matrix::Dref::operator=(const Matrix::Dref& ref){
 
 
 
-
-
-
-
+//class MatrixSharedPointer
 double** Matrix::MatrixSharedPointer::matrixMemAlloc(int newHeight, int newWidth, double **oldMatrix_ptr){
     matrix_ptr = new double*[height];
     pointerNotNull(matrix_ptr);

@@ -39,6 +39,10 @@ class Matrix{
         friend std::ostream& operator<<(std::ostream& stream, const Matrix& dispMatrix);
         double operator()(int row, int column) const;
         Dref operator()(int row, int column);
+        Matrix operator+(const Matrix& secondMatrix) const;
+        Matrix operator-(const Matrix& secondMatrix) const;
+        Matrix& operator+=(const Matrix& secondMatrix);
+        Matrix& operator-=(const Matrix& secondMatrix);
 
         int getHeight(){return matrixSharedData->height;};
         int getWidth(){return matrixSharedData->width;};
@@ -47,5 +51,10 @@ class Matrix{
         MatrixSharedPointer *matrixSharedData;
         static void pointerNotNull(void* ptr);
         void detachCurrentMatrixSharedPointer();
+        void matrixIterationOperation(const Matrix& firstMatrix, const Matrix& secondMatrix,
+                                    double (*operation)(double firstValue, double secondValue));
+        static double addElements(double firstValue, double secondValue);
+        static double subElements(double firstValue, double secondValue);
+        void checkEqMatrixSize(const Matrix& secondMatrix) const;
 
 };

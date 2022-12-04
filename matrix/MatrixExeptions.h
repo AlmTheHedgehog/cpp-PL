@@ -9,6 +9,13 @@ class InvalidMatrixSizeException : public std::exception {
         }
 };
 
+class DifferentMatrixSizeException : public std::exception {
+    public:
+        std::string what () {
+            return "Impossible to compare matrix with different size";
+        }
+};
+
 class InvalidAllocationException : public std::exception {
     public:
         std::string what () {
@@ -16,7 +23,7 @@ class InvalidAllocationException : public std::exception {
         }
 };
 
-class IndexOutOfBoundExeption : public std::exception {
+class IndexOutOfBoundException : public std::exception {
     public:
         std::string what () {
             return "Accessing index is out of bound";
