@@ -83,7 +83,7 @@ double Matrix::subElements(double firstValue, double secondValue){
 void Matrix::checkEqMatrixSize(const Matrix& secondMatrix) const{
     if((matrixSharedData->height != secondMatrix.matrixSharedData->height) ||
             (matrixSharedData->width != secondMatrix.matrixSharedData->width)){
-        throw InvalidMatrixSizeException();
+        throw DifferentMatrixSizeException();
     }
 }
 
@@ -112,6 +112,50 @@ Matrix& Matrix::operator-=(const Matrix& secondMatrix){
     checkEqMatrixSize(secondMatrix);
     matrixIterationOperation(*this, secondMatrix, &subElements);
     return *this;
+}
+
+void Matrix::matrixIterationMultiply(const Matrix& firstMatrix, const Matrix& secondMatrix){
+    double newValue = 0;
+    for(int i = 1; i<= matrixSharedData->height; i++){
+        for(int j = 1; j<= matrixSharedData->width; j++){
+            newValue = 0;
+            for(int oldFirstMtrxRow = 1; oldFirstMtrxRow <= firstMatrix.matrixSharedData->width; oldFirstMtrxRow++){
+                newValue += firstMatrix(i, oldFirstMtrxRow)*secondMatrix(oldFirstMtrxRow, j);
+            }
+            operator()(i, j) = newValue;
+        }
+    }
+}
+
+Matrix Matrix::operator*(const Matrix& secondMatrix) const{
+    if(matrixSharedData->width != secondMatrix.matrixSharedData->height){
+        throw InvalidMatrixSizeException();
+    }
+    Matrix newMatrix(matrixSharedData->height, secondMatrix.matrixSharedData->width);
+    newMatrix.matrixIterationMultiply(*this, secondMatrix);
+    return newMatrix;
+}
+
+Matrix& Matrix::operator*=(const Matrix& secondMatrix){
+    operator=(operator*(secondMatrix));
+    return *this;
+}
+
+bool Matrix::operator==(const Matrix& secondMatrix) const{
+    checkEqMatrixSize(secondMatrix);
+    for(int i = 1; i <= matrixSharedData->height; i++){
+        for(int j = 1; j <= matrixSharedData->width; j++){
+            if(operator()(i, j) != secondMatrix(i, j)){
+                return false;
+            }
+        }
+    }
+    return true;
+    
+}
+
+bool Matrix::operator!=(const Matrix& secondMatrix) const{
+    return !operator==(secondMatrix);
 }
 
 

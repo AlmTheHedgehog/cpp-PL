@@ -43,6 +43,10 @@ class Matrix{
         Matrix operator-(const Matrix& secondMatrix) const;
         Matrix& operator+=(const Matrix& secondMatrix);
         Matrix& operator-=(const Matrix& secondMatrix);
+        Matrix operator*(const Matrix& secondMatrix) const;
+        Matrix& operator*=(const Matrix& secondMatrix);
+        bool operator==(const Matrix& secondMatrix) const;
+        bool operator!=(const Matrix& secondMatrix) const;
 
         int getHeight(){return matrixSharedData->height;};
         int getWidth(){return matrixSharedData->width;};
@@ -56,5 +60,6 @@ class Matrix{
         static double addElements(double firstValue, double secondValue);
         static double subElements(double firstValue, double secondValue);
         void checkEqMatrixSize(const Matrix& secondMatrix) const;
+        void matrixIterationMultiply(const Matrix& firstMatrix, const Matrix& secondMatrix);
 
 };
