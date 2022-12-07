@@ -7,6 +7,45 @@ Matrix::Matrix(int matrixHeight, int matrixWidth){
     matrixSharedData = new MatrixSharedPointer(matrixHeight, matrixWidth);
 }
 
+Matrix::Matrix(std::ifstream& inputFile){
+    std::string line;
+    int matrixHeight, matrixWidth;
+    if (inputFile.is_open()){
+        getline(inputFile,line);
+        matrixHeight = getHeightFromSizeString(line);
+        matrixWidth = getWidthFromSizeString(line);
+        matrixSharedData = new MatrixSharedPointer(matrixHeight, matrixWidth);
+        for(int row = 0; row < matrixHeight; row++){
+            try{
+                readMatrixRowFromFile(inputFile, row);
+            }catch(std::exception& e){
+                throw WrongInputMatrixDataException();
+            }
+        }
+    }else{
+        throw IOException();
+    }
+}
+
+void Matrix::readMatrixRowFromFile(std::ifstream& inputFile, int row){
+    std::string line;
+    int index;
+    getline(inputFile,line);
+    for(int colomn = 0; colomn < matrixSharedData->width; colomn++){
+        index = 0;
+        if(line.size() == 0){
+            throw WrongInputMatrixDataException();
+        }
+        while((index < ((int)line.size())) && (line[index] != ' ')){
+            index++;
+        }
+        operator()(row+1, colomn+1) = std::stod(line.substr(0, index));
+        if(colomn < (matrixSharedData->width-1)){
+            line = line.substr(index+1, line.size() - index+1);
+        }
+    }
+}
+
 Matrix::Matrix(const Matrix& oldMtrx){
     oldMtrx.matrixSharedData->numberOfAccessers++;
     matrixSharedData = oldMtrx.matrixSharedData;
@@ -34,6 +73,37 @@ void Matrix::pointerNotNull(void* ptr){
     if(ptr == NULL){
         throw InvalidAllocationException();
     }
+}
+
+int Matrix::getHeightFromSizeString(std::string inputString){
+    int index = 0, res;
+    while((index < (int)inputString.size()) && (inputString[index] != ',')){
+        index++;
+    }
+    if(index == (int)inputString.size()){
+        throw WrongInputMatrixDataException();
+    }
+    try{
+        res = std::stoi(inputString.substr(0, index));
+    }catch(std::exception& e){
+        throw WrongInputMatrixDataException();
+    }
+    return res;
+}
+int Matrix::getWidthFromSizeString(std::string inputString){
+    int index = inputString.size() - 1, res;
+    while((index > 0) && (inputString[index] != ' ')){
+        index--;
+    }
+    if(index == 0){
+        throw WrongInputMatrixDataException();
+    }
+    try{
+        res = std::stoi(inputString.substr(index+1, inputString.size() - 1 - index));
+    }catch(std::exception& e){
+        throw WrongInputMatrixDataException();
+    }
+    return res;
 }
 
 std::ostream& operator<<(std::ostream& stream, const Matrix& dispMatrix){

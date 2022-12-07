@@ -29,3 +29,18 @@ class IndexOutOfBoundException : public std::exception {
             return "Accessing index is out of bound";
         }
 };
+
+class WrongInputMatrixDataException : public std::exception {
+    public:
+        std::string what () {
+            return "Impossible to read matrix from file. \
+            Wrong matrix data in file or way of reading it";
+        }
+};
+
+class IOException : public std::exception {
+    public:
+        std::string what () {
+            return "File accessing exeption";
+        }
+};

@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include <fstream>
+#include <string>
 #include <exception>
 
 class Matrix{
@@ -33,9 +35,10 @@ class Matrix{
         Matrix():Matrix(0, 0){};
         Matrix(int matrixHeight, int matrixWidth);
         Matrix(const Matrix& oldMtrx);
+        Matrix(std::ifstream& inputFile);
         Matrix& operator=(const Matrix& oldMtrx);
         ~Matrix();
-        
+
         friend std::ostream& operator<<(std::ostream& stream, const Matrix& dispMatrix);
         double operator()(int row, int column) const;
         Dref operator()(int row, int column);
@@ -61,5 +64,8 @@ class Matrix{
         static double subElements(double firstValue, double secondValue);
         void checkEqMatrixSize(const Matrix& secondMatrix) const;
         void matrixIterationMultiply(const Matrix& firstMatrix, const Matrix& secondMatrix);
+        int getHeightFromSizeString(std::string inputString);
+        int getWidthFromSizeString(std::string inputString);
+        void readMatrixRowFromFile(std::ifstream& inputFile, int row);
 
 };

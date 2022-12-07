@@ -13,18 +13,15 @@ void subAssignOperatorTest(Matrix m1, const Matrix& m2);
 void multAssignOperatorTest(Matrix m1, const Matrix& m2);
 void eqOperatorTest(const Matrix& m1, const Matrix& m2);
 void notEqOperatorTest(const Matrix& m1, const Matrix& m2);
-void test(const Matrix& newM1, const Matrix& newM2, const Matrix& newM3, const Matrix& newM4);
+void testCases(const Matrix& newM1, const Matrix& newM2, const Matrix& newM3, const Matrix& newM4);
+void testMatrixFromFile();
+void testDefinedMatrix();
 
 
 int main(){
-    Matrix newM1(5, 4), newM3(4, 3);
 
-    fillByIncrValues(newM1);
-    Matrix newM2 = newM1, newM4 = newM1;
-    fillByIncrValues(newM3);
-    newM4(3, 2) = 8;
-
-    test(newM1, newM2, newM3, newM4);
+    testMatrixFromFile();
+    //testDefinedMatrix();
 
     return 0;
 }
@@ -37,7 +34,7 @@ void fillByIncrValues(Matrix& m1){
     }
 }
 
-void test(const Matrix& newM1, const Matrix& newM2, const Matrix& newM3, const Matrix& newM4){
+void testCases(const Matrix& newM1, const Matrix& newM2, const Matrix& newM3, const Matrix& newM4){
     /*
         newM1 has to be equal to newM2(same size and values)
         newM3 has to have proper size for multiplication by newM1 (newM3 height = newM1 width)
@@ -64,6 +61,25 @@ void test(const Matrix& newM1, const Matrix& newM2, const Matrix& newM3, const M
     notEqOperatorTest(newM1, newM2);
     std::cout << "Have to be true:" << std::endl;
     notEqOperatorTest(newM1, newM4);
+}
+
+void testMatrixFromFile(){
+    std::ifstream matrixFile("matrixInput.txt");
+    Matrix newM1(matrixFile), newM2(matrixFile), 
+            newM3(matrixFile), newM4(matrixFile);
+    matrixFile.close();
+
+    testCases(newM1, newM2, newM3, newM4);
+}
+void testDefinedMatrix(){
+    Matrix newM1(5, 4), newM3(4, 3);
+
+    fillByIncrValues(newM1);
+    Matrix newM2 = newM1, newM4 = newM1;
+    fillByIncrValues(newM3);
+    newM4(3, 2) = 8;
+
+    testCases(newM1, newM2, newM3, newM4);
 }
 
 void printTest(const Matrix& m1){
@@ -135,6 +151,6 @@ void notEqOperatorTest(const Matrix& m1, const Matrix& m2){
     +display operator <<
     +arithmetic operators: + - * += -= *=           (InvalidMatrixSizeException) - mult; (DifferentMatrixSizeException) - others
     +comparison operators: == !=                    (DifferentMatrixSizeException)
-    ability to read matrix from input file stream  (IOExeption)
+    ability to read matrix from input file stream  (WrongInputMatrixDataException, IOException)
     +single element access                          (IndexOutOfBoundException)
 */
