@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <exception>
+#include "MatrixExeptions.h"
 
 class Matrix{
     public:

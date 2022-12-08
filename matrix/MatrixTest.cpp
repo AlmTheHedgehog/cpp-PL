@@ -19,9 +19,8 @@ void testDefinedMatrix();
 
 
 int main(){
-
-    testMatrixFromFile();
-    //testDefinedMatrix();
+	//testMatrixFromFile();
+	testDefinedMatrix();
 
     return 0;
 }
@@ -64,22 +63,28 @@ void testCases(const Matrix& newM1, const Matrix& newM2, const Matrix& newM3, co
 }
 
 void testMatrixFromFile(){
-    std::ifstream matrixFile("matrixInput.txt");
-    Matrix newM1(matrixFile), newM2(matrixFile), 
-            newM3(matrixFile), newM4(matrixFile);
-    matrixFile.close();
-
-    testCases(newM1, newM2, newM3, newM4);
+	try{
+		std::ifstream matrixFile("matrixInput.txt");
+		Matrix newM1(matrixFile), newM2(matrixFile), 
+				newM3(matrixFile), newM4(matrixFile);
+		matrixFile.close();
+		testCases(newM1, newM2, newM3, newM4);
+	}catch(std::exception& e){
+		std::cout << e.what() << "testMatrixFromFile" << std::endl;
+	}
 }
 void testDefinedMatrix(){
-    Matrix newM1(5, 4), newM3(4, 3);
+	try{
+		Matrix newM1(5, 4), newM3(4, 3);
 
-    fillByIncrValues(newM1);
-    Matrix newM2 = newM1, newM4 = newM1;
-    fillByIncrValues(newM3);
-    newM4(3, 2) = 8;
-
-    testCases(newM1, newM2, newM3, newM4);
+		fillByIncrValues(newM1);
+		Matrix newM2 = newM1, newM4 = newM1;
+		fillByIncrValues(newM3);
+		newM4(3, 2) = 8;
+		testCases(newM1, newM2, newM3, newM4);
+	}catch(std::exception& e){
+		std::cout << e.what() << "testDefinedMatrix" << std::endl;
+	}
 }
 
 void printTest(const Matrix& m1){
@@ -88,59 +93,99 @@ void printTest(const Matrix& m1){
 }
 
 void copyConstructorTest(const Matrix& m1){
-    std::cout << "copyConstructorTest:" << std::endl;
-    Matrix m2(m1);
-    std::cout << m2 << std::endl;
+	std::cout << "copyConstructorTest:" << std::endl;
+	try{
+		Matrix m2(m1);
+		std::cout << m2 << std::endl;
+	}catch(std::exception& e){
+		std::cout << e.what() << std::endl;
+	}
 }
 
 void assignmentOperatorTest(const Matrix& m1){
-    std::cout << "assignmentOperatorTest:" << std::endl;
+	std::cout << "assignmentOperatorTest:" << std::endl;
     Matrix m2;
-    m2 = m1;
+	try{
+		m2 = m1;
+	}catch(std::exception& e){
+		std::cout << e.what() << std::endl;
+	}    
     std::cout << m2 << std::endl;
 }
 
 void addOperatorTest(const Matrix& m1, const Matrix& m2){
-    std::cout << "addOperatorTest:" << std::endl;
-    std::cout << m1 + m2 << std::endl;
+	std::cout << "addOperatorTest:" << std::endl;
+	try{
+		std::cout << m1 + m2 << std::endl;
+	}catch(std::exception& e){
+		std::cout << e.what() << std::endl;
+	}    
 }
 
 void subOperatorTest(const Matrix& m1, const Matrix& m2){
-    std::cout << "subOperatorTest:" << std::endl;
-    std::cout << m1 - m2 << std::endl;
+	std::cout << "subOperatorTest:" << std::endl;
+	try{
+		std::cout << m1 - m2 << std::endl;
+	}catch(std::exception& e){
+		std::cout << e.what() << std::endl;
+	}    
 }
 
 void multOperatorTest(const Matrix& m1, const Matrix& m2){
-    std::cout << "multOperatorTest:" << std::endl;
-    std::cout << m1 * m2 << std::endl;
+	std::cout << "multOperatorTest:" << std::endl;
+	try{
+		std::cout << m1 * m2 << std::endl;
+	}catch(std::exception& e){
+		std::cout << e.what() << std::endl;
+	}    
 }
 
 void addAssignOperatorTest(Matrix m1, const Matrix& m2){
-    std::cout << "addAssignOperatorTest:" << std::endl;
-    m1 += m2;
+	std::cout << "addAssignOperatorTest:" << std::endl;
+	try{
+		m1 += m2;
+	}catch(std::exception& e){
+		std::cout << e.what() << std::endl;
+	}
     std::cout << m1 << std::endl;
 }
 
 void subAssignOperatorTest(Matrix m1, const Matrix& m2){
-    std::cout << "subAssignOperatorTest:" << std::endl;
-    m1 -= m2;
+	std::cout << "subAssignOperatorTest:" << std::endl;
+	try{
+		m1 -= m2;
+	}catch(std::exception& e){
+		std::cout << e.what() << std::endl;
+	}
     std::cout << m1 << std::endl;
 }
 
 void multAssignOperatorTest(Matrix m1, const Matrix& m2){
-    std::cout << "multAssignOperatorTest:" << std::endl;
-    m1 *= m2;
+	std::cout << "multAssignOperatorTest:" << std::endl;
+	try{
+		m1 *= m2;
+	}catch(std::exception& e){
+		std::cout << e.what() << std::endl;
+	}
     std::cout << m1 << std::endl;
 }
 
 void eqOperatorTest(const Matrix& m1, const Matrix& m2){
-    std::cout << "eqOperatorTest:" << std::endl;
-    std::cout << "m1:" << std::endl << m1 << "m2:" << std::endl << m2 << (m1==m2) << std::endl << std::endl;
+	std::cout << "eqOperatorTest:" << std::endl;
+	try{
+		std::cout << "m1:" << std::endl << m1 << "m2:" << std::endl << m2 << (m1==m2) << std::endl << std::endl;
+	}catch(std::exception& e){
+		std::cout << e.what() << std::endl;
+	}
 }
 
 void notEqOperatorTest(const Matrix& m1, const Matrix& m2){
-    std::cout << "notEqOperatorTest:" << std::endl;
-    std::cout << "m1:" << std::endl << m1 << "m2:" << std::endl << m2 << (m1!=m2) << std::endl << std::endl;
+	std::cout << "notEqOperatorTest:" << std::endl;
+	try{
+		std::cout << "m1:" << std::endl << m1 << "m2:" << std::endl << m2 << (m1!=m2) << std::endl << std::endl;
+	}catch(std::exception& e){
+		std::cout << e.what() << std::endl;
+	}
 }
 
 
