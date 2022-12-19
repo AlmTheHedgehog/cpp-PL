@@ -2,7 +2,7 @@
 headers = Map.h Employee.h Book.h
 
 # List your *.cpp files:
-sources = MapTest.cpp
+sources = TestMap.cpp
 
 # Specify name of your program:
 executable = MapTesting
