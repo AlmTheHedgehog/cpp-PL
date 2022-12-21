@@ -14,4 +14,7 @@ class Employee{
             name = parent.name;
             position = parent.position;
         }
+        friend std::ostream& operator<<(std::ostream& stream, const Employee& dispEmployee){
+            return stream << dispEmployee.name << ", " << dispEmployee.position << ". Age:" << dispEmployee.age;
+        }
 };

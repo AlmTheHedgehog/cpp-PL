@@ -2,19 +2,13 @@
 #include "Map.h"														// Defines template Map<Key, Value>
 #include <iostream>
 
+//  check all EXCEPTIONS!
+
 typedef unsigned int ID; 												// Identification number of employee
 typedef Map<ID, Employee> Database; 									// Database of employees
 
 using namespace std;
 
-int main(){
-	Database database;
-	Database newDB(database);
-
-	return 0;
-}
-
-/*
 void addEmployees(Database& database);
 void modifyEmployees(Database& database);
 
@@ -38,6 +32,11 @@ void addEmployees(Database& database) {
 	database.add(761028073, Employee("Jan Kowalski", "salesman", 28)); 	// Add first employee: name: Jan Kowalski, position: salseman, age: 28,
 	database.add(510212881, Employee("Adam Nowak", "storekeeper", 54));	// Add second employee
 	database.add(730505129, Employee("Anna Zaradna", "secretary", 32));	// Add third employee
+	try{
+		database.add(730505129, Employee("Anna Zaradna", "secretary", 32));	// Add third employee
+	}catch(ElementAlreadyExistsException&){
+		cout << "730505129 - EXISTS ALREADY" << endl;
+	}
 }
 
 void modifyEmployees(Database& database) {
@@ -49,4 +48,3 @@ void modifyEmployees(Database& database) {
 	employeePtr = database.find(761028073);								// Find employee using its ID
 	employeePtr->age = 29;												// Modify the age of employee
 }
-*/
