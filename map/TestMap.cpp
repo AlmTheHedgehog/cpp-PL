@@ -1,12 +1,10 @@
-#include "Employee.h"													// Defines class Employee
+#include "Employee.h"				
 #include "Map.h"
-#include "Book.h"												// Defines template Map<Key, Value>
+#include "Book.h"												
 #include <iostream>
 
-//  check all EXCEPTIONS!
-
-typedef unsigned int ID; 												// Identification number of employee
-typedef Map<ID, Employee> Database; 									// Database of employees
+typedef unsigned int ID; 											
+typedef Map<ID, Employee> Database; 								
 typedef Map<ID, Book> BooksDB; 	
 
 using namespace std;
@@ -32,7 +30,7 @@ void checkEmpDB(Database& database){
 	addEmployees(database);
 
 	Database newDatabase = database;
-	try{									// Make a copy of database
+	try{						
 		newDatabase.add(830505432, Employee("Ewa Nowak", "charwoman", 43));	// Add fourth employee
 	}catch(ElementAlreadyExistsException&){
 		cout << "element 830505432 already exicts" << endl;
@@ -43,26 +41,20 @@ void checkEmpDB(Database& database){
 	cout << "Original database:" << endl << database << endl;
 	cout << "Modified database:" << endl << newDatabase << endl;
 
-	database = newDatabase;												// Update original database
+	database = newDatabase;												
 
 	cout << "Database after the assignment:" << endl << database << endl;
 }
 
 void checkBooksDB(BooksDB& booksSh){
 	
-	cout << "New DB with main numbers:" << endl << booksSh << endl;
+	cout << "New DB for books:" << endl << booksSh << endl;
 
-	try{									// Make a copy of database
-		addBooks(booksSh);
-	}catch(ElementAlreadyExistsException&){
-		cout << "some of adding func in modifyEmployees return unhandelled exception" << endl;
-	}
+	addBooks(booksSh);
+	
+	cout << "Original database:" << endl << booksSh << endl;
 
-	try{
-		modifyBooks(booksSh);
-	}catch(ElementAlreadyExistsException&){
-		cout << "some of elements exist" << endl;
-	}
+	modifyBooks(booksSh);
 
 	cout << "Modified database:" << endl << booksSh << endl;
 }
